@@ -1,0 +1,249 @@
+<!-- MAIN -->
+<main class="content">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <h5>Attendance</h5>
+    <small>Track / Attendance</small>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="card-box d-flex gap-2">
+    <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" accept=".xlsx, .xls">
+    <button class="btn btn-success" (click)="fileInput.click()" type="button">Import File</button>
+    <button class="btn btn-success" (click)="refresh()">Refresh</button>
+    <button class="btn btn-success" (click)="exportToExcel()">Export</button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal">
+      Add Student
+    </button>
+    <button class="btn btn-info text-white" (click)="sendTelegramAlert()">
+      <i class="fas fa-paper-plane me-2"></i> Telegram Alert
+    </button>
+  </div>
+
+  <!-- FILTER -->
+  <div class="card-box mt-3">
+    <div class="row g-3 align-items-end">
+
+      <div class="col-md-1">
+        <label class="form-label">Class</label>
+        <select class="form-select">
+          <option>SV23</option>
+          <option>SV13</option>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label">Subject</label>
+        <select class="form-select">
+          <option>WEB</option>
+          <option>JAVA</option>
+          <option>ORACLE</option>
+          <option>ANIMATE 2D</option>
+          <option>STUIDO MULTIMEDIA</option>
+          <option>INTERVIEW SKILL</option>
+          <option>SYSTEM ANALYSIS </option>
+          <option>MIS</option>
+          <option>NETWORKING</option>
+        </select>
+      </div>
+
+      <div class="col-md-4 d-flex align-items-end gap-2">
+        <div class="flex-grow-1">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-control" [(ngModel)]="selectedDate" (change)="generateSchedule()">
+        </div>
+        <button class="btn btn-outline-success" (click)="previousWeek()" title="Previous Week">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="btn btn-outline-success" (click)="nextWeek()" title="Next Week">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label">Search Student</label>
+        <div class="input-group">
+          <span class="input-group-text bg-success text-white border-success">
+            <i class="fas fa-search"></i>
+          </span>
+          <input type="text" class="form-control border-success" placeholder="Search by name..." [(ngModel)]="searchQuery">
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <button class="btn btn-success w-100" (click)="generateSchedule()">Generate Sheet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <!-- <div class="attendance-box mt-4">
+    <h6>Attendance Sheet</h6>
+
+    <table class="table align-middle mt-3">
+      <thead>
+        <tr>
+          <th><input type="checkbox"></th>
+          <th>#</th>
+          <th>Student Name KH</th>
+          <th>Student Name ENG</th>
+          <th>GENDER</th>
+          <th>Class</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of filteredStudentList; let i = index">
+          <td><input type="checkbox"></td>
+          <td>{{ i + 1 }}</td>
+          <td class="dangrek-regular">{{ student.studentname_kh }}</td>
+          <td>{{ student.studentname_eng }}</td>
+          <td>{{ student.gender }}</td>
+          <td>{{ student.class_id }}</td>
+          <td><span class="badge bg-success">Present</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
+
+  <!-- SUBMIT -->
+
+  <div class="attendance-wrapper mt-4">
+
+    <div class="table-container">
+
+      <table class="attendance-table">
+
+        <!-- HEADER ROW 1 (DATES) -->
+        <thead>
+          <tr>
+            <th rowspan="2">#</th>
+            <th rowspan="2" class="dangrek-regular">ឈ្មោះ</th>
+            <th rowspan="2">Name</th>
+            <th rowspan="2">Gender</th>
+
+            <th *ngFor="let day of attendanceSheet" [attr.colspan]="day.subjects.length" class="date-group">
+              {{ day.displayDate }}
+            </th>
+          </tr>
+
+          <!-- HEADER ROW 2 (SUBJECTS) -->
+          <tr>
+            <ng-container *ngFor="let day of attendanceSheet">
+              <th *ngFor="let sub of day.subjects">{{ sub }}</th>
+            </ng-container>
+          </tr>
+        </thead>
+
+        <!-- BODY -->
+        <tbody>
+          <tr *ngFor="let student of filteredStudentList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td class="dangrek-regular">{{ student.name_kh }}</td>
+            <td>{{ student.name_eng }}</td>
+            <td>{{ student.gender }}</td>
+
+            <ng-container *ngFor="let day of attendanceSheet">
+              <td *ngFor="let sub of day.subjects" (click)="toggleAttendance(student, day.date, sub)"
+                [ngClass]="getStatusClass(student, day.date, sub)">
+                {{ getStatusIcon(student, day.date, sub) }}
+              </td>
+            </ng-container>
+
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  <button class="btn btn-success mt-3" (click)="saveAttendance()">Save Attendance</button>
+
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content p-4">
+
+        <!-- Modal Header -->
+        <div class="modal-header border-0">
+          <h4 class="fw-bold text-success" id="registerModalLabel">Register Student</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <h5 class="text-center text-success fw-bold mb-4">
+            Student Information
+          </h5>
+
+          <div class="row">
+
+            <!-- LEFT SIDE FORM -->
+            <div class="col-md-7">
+
+              <!-- Name KH -->
+              <div class="mb-3 row align-items-center">
+                <label class="col-sm-3 col-form-label fw-bold dangrek-regular">ឈ្មោះ :</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control rounded-pill custom-input" placeholder="Enter Name KH" [(ngModel)]="newStudent.studentname_kh">
+                </div>
+              </div>
+
+              <!-- Name ENG -->
+              <div class="mb-3 row align-items-center">
+                <label class="col-sm-3 col-form-label fw-bold">NAME</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control rounded-pill custom-input" placeholder="Enter Name ENG" [(ngModel)]="newStudent.studentname_eng">
+                </div>
+              </div>
+
+              <!-- Gender -->
+              <div class="mb-3 row align-items-center">
+                <label class="col-sm-3 col-form-label fw-bold">Gender</label>
+                <div class="col-sm-9 d-flex gap-4">
+                  <div class="form-check">
+                    <input class="form-check-input custom-radio" type="radio" name="gender" value="M" [(ngModel)]="newStudent.gender">
+                    <label class="form-check-label">M</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input custom-radio" type="radio" name="gender" value="F" [(ngModel)]="newStudent.gender">
+                    <label class="form-check-label">F</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Class -->
+              <div class="mb-3 row align-items-center">
+                <label class="col-sm-3 col-form-label fw-bold">Class</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control rounded-pill custom-input" placeholder="Enter Class ID" [(ngModel)]="newStudent.class_id">
+                </div>
+              </div>
+
+            </div>
+
+            <!-- RIGHT SIDE UPLOAD -->
+            <div class="col-md-5 d-flex justify-content-center align-items-start">
+              <div class="upload-box text-center p-5">
+                <i class="fas fa-upload fa-2x"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer border-0 justify-content-end">
+          <button class="btn btn-success rounded-pill px-4" (click)="saveStudent()" data-bs-dismiss="modal">
+            SAVE
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</main>

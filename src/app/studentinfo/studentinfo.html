@@ -1,0 +1,198 @@
+<div class="container-fluid py-4">
+
+  <!-- Title -->
+  <h4 class="fw-bold text-success mb-4 "> <span class="dangrek-regular">វិទ្យាស្ថានសុីតិក</span> Student Logs</h4>
+
+  <!-- Filter + Search Row -->
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+
+    <!-- Left Filters -->
+    <div class="d-flex gap-2 flex-wrap align-items-center">
+
+      <select class="form-select filter-select">
+        <option>Group SV23</option>
+      </select>
+
+      <select class="form-select filter-select">
+        <option>Term 1</option>
+      </select>
+
+      <select class="form-select filter-select">
+        <option>Semester 1</option>
+      </select>
+
+      <div class="d-flex gap-2 flex-wrap">
+        <button class="btn btn-success rounded-pill px-4 btn-action">
+          Generate Sheet
+        </button>
+
+        <div class="dropdown">
+          <button class="btn btn-success rounded-pill px-4 dropdown-toggle btn-action" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Export
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="exportDropdown">
+            <li><a class="dropdown-item py-2" (click)="exportToExcel()" href="javascript:void(0)"><i class="fas fa-file-excel text-success me-2"></i>Export to Excel</a></li>
+            <li><a class="dropdown-item py-2" (click)="exportToPDF()" href="javascript:void(0)"><i class="fas fa-file-pdf text-danger me-2"></i>Export to PDF</a></li>
+          </ul>
+        </div>
+
+        <button class="btn btn-success rounded-pill px-4 btn-action" (click)="openRegisterModal()" data-bs-toggle="modal" data-bs-target="#registerModal">
+          Add Student
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Search -->
+    <div class="search-box d-flex align-items-center flex-grow-1 flex-md-grow-0">
+      <input type="text" class="form-control rounded-pill search-input"
+        placeholder="Search Student" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)">
+      <i class="fas fa-search ms-3 text-success"></i>
+    </div>
+
+  </div>
+
+  <!-- Header -->
+  <div class="logs-header row text-success fw-bold py-3 text-center">
+    <div class="col-1">No.</div>
+    <div class="col-1">Actions</div>
+    <div class="col-2 dangrek-regular">ឈ្មោះ</div>
+    <div class="col-2">Name</div>
+    <div class="col-1">Gender</div>
+    <div class="col-1">Class</div>
+    <div class="col-2">Total Present Day</div>
+    <div class="col-2">Total Absent Day</div>
+  </div>
+  <!-- Table Container -->
+  <div class="logs-container mt-2">
+
+    <!-- Loading Spinner -->
+    <div *ngIf="loading()  === true" class="text-center py-5">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger mx-3" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Body -->
+    <div class="logs-body" *ngIf="loading() === false">
+
+      <!-- Dynamic Row -->
+      <div class="row text-center align-items-center py-3 logs-row" *ngFor="let log of filteredStudentLogs(); let i = index">
+        <div class="col-1">{{ i + 1 | number:'2.0-0' }}</div>
+        <div class="col-1">
+          <div class="d-flex gap-2 justify-content-center">
+            <button class="btn btn-sm btn-outline-primary border-0" (click)="editStudent(log)" data-bs-toggle="modal" data-bs-target="#registerModal">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger border-0" (click)="deleteStudent(log.student_id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-2 dangrek-regular student-name-link" (click)="viewStudentDetails(log.student_id)">{{ log.studentname_kh }}</div>
+        <div class="col-2 student-name-link" (click)="viewStudentDetails(log.student_id)">{{ log.studentname_eng }}</div>
+        <div class="col-1">{{ log.gender }}</div>
+        <div class="col-1" routerLink="/layout/studentdetails">{{ log.class_id || 'N/A' }}</div>
+        <div class="col-2 fw-bold text-success">{{ log.totalPresent }}</div>
+        <div class="col-2 fw-bold text-danger">{{ log.totalAbsent }}</div>
+      </div>
+
+      <!-- No Data Message -->
+      <div *ngIf="filteredStudentLogs().length === 0" class="text-center py-5 text-muted">
+        No student logs found.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content p-4">
+
+      <!-- Modal Header -->
+      <div class="modal-header border-0">
+        <h4 class="fw-bold text-success" id="registerModalLabel">
+          {{ isEditMode ? 'Edit Student' : 'Register Student' }}
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <h5 class="text-center text-success fw-bold mb-4">
+          Student Information
+        </h5>
+
+        <div class="row">
+
+          <!-- LEFT SIDE FORM -->
+          <div class="col-md-7">
+
+            <!-- Name KH -->
+            <div class="mb-3 row align-items-center">
+              <label class="col-sm-3 col-form-label fw-bold dangrek-regular">ឈ្មោះ :</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control rounded-pill custom-input" placeholder="Enter Name KH" [(ngModel)]="newStudent.studentname_kh">
+              </div>
+            </div>
+
+            <!-- Name ENG -->
+            <div class="mb-3 row align-items-center">
+              <label class="col-sm-3 col-form-label fw-bold">NAME</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control rounded-pill custom-input" placeholder="Enter Name ENG" [(ngModel)]="newStudent.studentname_eng">
+              </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="mb-3 row align-items-center">
+              <label class="col-sm-3 col-form-label fw-bold">Gender</label>
+              <div class="col-sm-9 d-flex gap-4">
+                <div class="form-check">
+                  <input class="form-check-input custom-radio" type="radio" name="gender" value="M" [(ngModel)]="newStudent.gender">
+                  <label class="form-check-label">M</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input custom-radio" type="radio" name="gender" value="F" [(ngModel)]="newStudent.gender">
+                  <label class="form-check-label">F</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Class -->
+            <div class="mb-3 row align-items-center">
+              <label class="col-sm-3 col-form-label fw-bold">Class</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control rounded-pill custom-input" placeholder="Enter Class ID" [(ngModel)]="newStudent.class_id">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT SIDE UPLOAD -->
+          <div class="col-md-5 d-flex justify-content-center align-items-start">
+            <div class="upload-box text-center p-5">
+              <i class="fas fa-upload fa-2x"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer border-0 justify-content-end">
+        <button class="btn btn-success rounded-pill px-4" (click)="saveStudent()" data-bs-dismiss="modal">
+          SAVE
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

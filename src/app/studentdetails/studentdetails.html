@@ -1,0 +1,100 @@
+<div class="container-fluid py-4">
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger mx-3" role="alert">
+    {{ errorMessage }}
+  </div>
+
+  <!-- STUDENT DETAILS CARD -->
+  <div class="card shadow-sm p-4 rounded-4 mb-4" *ngIf="loading === false && !errorMessage && student ">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="fw-bold text-success">Student Details</h4>
+      <button class="btn btn-success rounded-pill px-4" (click)="studentDetailsBack()">BACK</button>
+    </div>
+
+    <div class="row align-items-center">
+
+      <!-- Profile -->
+      <div class="col-md-2 text-center">
+        <img src="/image/pf student.png"
+          class="profile-img mb-3">
+      </div>
+
+      <!-- Info -->
+      <div class="col-md-10">
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <small class="text-muted">Full Name</small>
+            <h6 class="fw-bold">{{ student.studentname_eng || 'N/A' }}</h6>
+          </div>
+
+          <div class="col-md-2">
+            <small class="text-muted">Khmer Name</small>
+            <h6 class="fw-bold">{{ student.studentname_kh || 'N/A' }}</h6>
+          </div>
+
+          <div class="col-md-2">
+            <small class="text-muted">Gender</small>
+            <h6 class="fw-bold">{{ student.gender || 'N/A' }}</h6>
+          </div>
+
+          <div class="col-md-2">
+            <small class="text-muted">Class ID</small>
+            <h6 class="fw-bold">{{ student.class_id || 'N/A' }}</h6>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <small class="text-muted">Status</small>
+            <h6 class="fw-bold">Active</h6>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="row mt-4 g-4">
+
+      <div class="col-md-3">
+        <div class="stat-card">
+          <div class="icon-circle text-center">
+            <i class="fa-solid fa-person-walking-arrow-loop-left text-white mt-3 fs-4"></i>
+          </div>
+          <div>
+            <h4 class="fw-bold">N/A</h4>
+            <small>Total Attendance</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ATTENDANCE HISTORY -->
+  <div class="card shadow-sm p-4 rounded-4" *ngIf="!loading && !errorMessage && student">
+
+    <h4 class="fw-bold mb-4">
+      <span class="history-bar"></span>
+      Attendance History
+    </h4>
+
+    <div class="text-center py-4 text-muted">
+      History data is currently not available for this view.
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,99 @@
+<!-- MAIN -->
+<main class="content">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <h5>Dashboard</h5>
+        <div class="profile">
+            <i class="fa fa-bell"></i>
+            <img src="https://i.pravatar.cc/40" />
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="row g-4 mt-2">
+        <div class="col-md-3">
+            <div class="stat-card active">
+                <p>Present | Today</p>
+                <h3>145</h3>
+                <small>12% increase</small>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card">
+                <p>Absent | Today</p>
+                <h3>145</h3>
+                <small>12% increase</small>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card">
+                <p>Attendance | Month</p>
+                <h3>145</h3>
+                <small>12% increase</small>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card">
+                <p>Report | Month</p>
+                <h3>145</h3>
+                <small>12% increase</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="row mt-4 g-4">
+
+        <!-- LINE CHART -->
+        <div class="col-md-8">
+            <div class="chart-card">
+                <h6>Reports | Today</h6>
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+
+        <!-- RADAR -->
+        <div class="col-md-4">
+            <div class="chart-card">
+                <h6>Attendance Report</h6>
+                <canvas id="radarChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Line Chart
+    new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: {
+            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00'],
+            datasets: [
+                { label: 'Present', data: [30, 40, 25, 50, 42, 80, 55], borderWidth: 2 },
+                { label: 'Absent', data: [15, 12, 30, 20, 10, 25, 12], borderWidth: 2 },
+                { label: 'Late', data: [10, 30, 45, 32, 35, 50, 40], borderWidth: 2 }
+            ]
+        }
+    });
+
+    // Radar Chart
+    new Chart(document.getElementById('radarChart'), {
+        type: 'radar',
+        data: {
+            labels: ['Sales', 'Marketing', 'Dev', 'Support', 'Tech'],
+            datasets: [
+                { label: 'Allocated', data: [65, 59, 90, 81, 56] },
+                { label: 'Actual', data: [28, 48, 40, 19, 96] }
+            ]
+        }
+    });
+</script>

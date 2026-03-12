@@ -1,0 +1,169 @@
+body {
+  background: #f6f9ff;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 230px;
+  background: #fff;
+  min-height: 100vh;
+  padding: 20px;
+  box-shadow: 2px 0 15px rgba(0,0,0,.05);
+}
+
+.logo {
+  font-weight: 700;
+  color: #198754;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.menu li {
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #555;
+}
+
+.menu li i {
+  margin-right: 10px;
+}
+
+.menu li.active,
+.menu li:hover {
+  background: #198754;
+  color: #fff;
+}
+
+/* Main */
+.content {
+  flex: 1;
+  padding: 25px;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile img {
+  border-radius: 50%;
+  margin-left: 15px;
+}
+
+/* Stat cards */
+.stat-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.05);
+}
+
+.stat-card.active {
+  border: 2px dashed #198754;
+}
+
+.stat-card h3 {
+  color: #198754;
+  font-weight: 700;
+}
+
+/* Charts */
+.chart-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.05);
+}
+.dangrek-regular {
+  font-family: "Dangrek", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.attendance-wrapper {
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.05);
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.attendance-table {
+  border-collapse: collapse;
+  min-width: 1000px;
+  width: 100%;
+  text-align: center;
+}
+
+.attendance-table th,
+.attendance-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  min-width: 50px;
+  cursor: pointer;
+}
+
+.attendance-table th {
+  background: #e8f5e9;
+  font-weight: 600;
+}
+
+.date-group {
+  background: #c8e6c9;
+  font-weight: 700;
+}
+
+.present {
+  color: green;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.absent {
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
+}
+.custom-input {
+  background-color: #f1f1f1;
+  border: none;
+  padding: 12px 20px;
+}
+
+.custom-input:focus {
+  box-shadow: none;
+  border: 1px solid #198754;
+}
+
+.custom-radio {
+  width: 20px;
+  height: 20px;
+}
+
+.upload-box {
+  width: 220px;
+  height: 180px;
+  border: 2px dashed #cfcfcf;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #0d3b66;
+  cursor: pointer;
+}
+
+.upload-box:hover {
+  border-color: #198754;
+  background-color: #f9f9f9;
+}

@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="auth-container">
+
+        <!-- LEFT -->
+        <div class="auth-left">
+          <div class="brand">
+            <span class="text-success">E-Attendance</span>
+          </div>
+
+          <img src="https://cdni.iconscout.com/illustration/premium/thumb/secure-login-4489775-3723271.png"
+            alt="illustration" class="illustration" />
+        </div>
+
+        <!-- RIGHT -->
+        <div class="auth-right">
+          <h2>Welcome to Focus!</h2>
+          <p class="subtitle">Please sign in to your account</p>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+
+            <div class="mb-3">
+              <label class="form-label">Username</label>
+              <input type="text" formControlName="username" class="form-control" placeholder="e.g. teacher_john">
+              <div *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid" class="text-danger small">
+                Username is required
+              </div>
+            </div>
+
+            <div class="mb-4 position-relative">
+              <label class="form-label">Password</label>
+              <input type="password" formControlName="password" class="form-control" placeholder="6+ characters">
+              <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-danger small">
+                Password is required (min 6 characters)
+              </div>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger py-2 small">
+              {{ errorMessage }}
+            </div>
+
+            <div class="text-end mb-3">
+              Don't have an account?
+              <a href="#" class="text-success">Request Access</a>
+            </div>
+
+            <button type="submit" [disabled]="loginForm.invalid || loading" class="btn btn-login w-100">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+              {{ loading ? 'Signing in...' : 'Login' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

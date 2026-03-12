@@ -1,0 +1,85 @@
+body {
+  background: #f6f9ff;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 230px;
+  background: #fff;
+  min-height: 100vh;
+  padding: 20px;
+  box-shadow: 2px 0 15px rgba(0,0,0,.05);
+}
+
+.logo {
+  font-weight: 700;
+  color: #198754;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.menu li {
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #555;
+}
+
+.menu li i {
+  margin-right: 10px;
+}
+
+.menu li.active,
+.menu li:hover {
+  background: #198754;
+  color: #fff;
+}
+
+/* Main */
+.content {
+  flex: 1;
+  padding: 25px;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile img {
+  border-radius: 50%;
+  margin-left: 15px;
+}
+
+/* Stat cards */
+.stat-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.05);
+}
+
+.stat-card.active {
+  border: 2px dashed #198754;
+}
+
+.stat-card h3 {
+  color: #198754;
+  font-weight: 700;
+}
+
+/* Charts */
+.chart-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.05);
+}

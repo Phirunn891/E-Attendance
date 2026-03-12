@@ -1,0 +1,109 @@
+.dangrek-regular {
+  font-family: "Dangrek", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.logs-container {
+  background: #f2f2f2;
+  border-radius: 20px;
+  padding: 15px;
+  height: 600px;
+  overflow-y: auto;
+}
+
+.logs-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #e6e6e6;
+  border-radius: 15px;
+}
+
+.logs-row {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.logs-row:last-child {
+  border-bottom: none;
+}
+
+.filter-select {
+  width: 150px;
+  border-radius: 12px;
+}
+
+.search-input {
+  background: #f1f1f1;
+  border: none;
+  padding: 10px 20px;
+  width: 250px;
+}
+
+.search-input:focus {
+  box-shadow: none;
+  border: 1px solid #198754;
+}
+
+.search-box i {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.student-name-link {
+  cursor: pointer;
+  color: #198754;
+  transition: color 0.2s;
+}
+
+.student-name-link:hover {
+  color: #146c43;
+  text-decoration: underline;
+}
+
+/* Action Buttons Stability */
+.btn-action {
+  white-space: nowrap;
+  min-width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+/* Dropdown Menu Refinement */
+.dropdown-menu {
+  border-radius: 15px;
+  padding: 8px;
+  min-width: 200px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.dropdown-item {
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #e8f5e9;
+  color: #198754;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .filter-select {
+    width: 100%;
+  }
+  .search-input {
+    width: 100%;
+  }
+  .btn-action {
+    flex: 1;
+    min-width: 0;
+  }
+}

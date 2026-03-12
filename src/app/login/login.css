@@ -1,0 +1,141 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f8f7ff;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+.login-wrapper {
+  height: 90vh;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  width: 1000px;
+  height: 520px;
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* LEFT */
+.auth-left {
+  flex: 1;
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  padding: 40px;
+  position: relative;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 20px;
+  color: #198754;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.illustration {
+  width: 80%;
+  margin: 80px auto 0;
+  display: block;
+}
+
+/* RIGHT */
+.auth-right {
+  flex: 1;
+  background: #fff;
+  padding: 60px;
+  position: relative;
+}
+
+.top-link {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 14px;
+}
+
+.top-link a {
+  color: #198754;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-right h2 {
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #888;
+  margin-bottom: 30px;
+}
+
+.auth-form {
+  max-width: 380px;
+}
+
+.form-label {
+  font-size: 14px;
+}
+
+.form-control {
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.focus-input {
+  border: 2px solid #198754;
+}
+
+.password-eye {
+  position: absolute;
+  right: 15px;
+  bottom: 14px;
+  cursor: pointer;
+  color: #999;
+}
+
+.btn-login {
+  background: linear-gradient(135deg, #2e7d32, #198754);
+  color: #fff;
+  padding: 12px;
+  border-radius: 30px;
+  font-weight: 600;
+  box-shadow: 0 10px 20px rgba(25,135,84,.3);
+}
+
+.or {
+  text-align: center;
+  margin: 20px 0 10px;
+  color: #aaa;
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social i {
+  width: 40px;
+  height: 40px;
+  background: #f1f8e9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #198754;
+  cursor: pointer;
+}
