@@ -44,7 +44,6 @@
     "file-saver": "^2.0.5",
     "jspdf": "^4.2.0",
     "jspdf-autotable": "^5.0.7",
-    "mdb-angular-ui-kit": "^9.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5"
