@@ -28,13 +28,16 @@ export class Login {
     if (this.loginForm.valid) {
       this.loading = true;
       this.errorMessage = '';
+      console.log('Login attempt started:', this.loginForm.value);
       
       this.authService.login(this.loginForm.value).subscribe({
         next: (res) => {
+          console.log('Login successful:', res);
           this.loading = false;
           this.router.navigate(['/layout/dashboard']);
         },
         error: (err) => {
+          console.error('Login error:', err);
           this.loading = false;
           this.errorMessage = err.error?.message || 'Login failed. Please check your credentials.';
         }

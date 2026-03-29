@@ -1,99 +1,249 @@
-<!-- MAIN -->
 <main class="content">
 
     <!-- TOP BAR -->
     <div class="topbar">
-        <h5>Dashboard</h5>
-        <div class="profile">
-            <i class="fa fa-bell"></i>
-            <img src="https://i.pravatar.cc/40" />
+        <div class="search-wrap">
+            <i class="fa fa-search"></i>
+            <input type="text" placeholder="Search students, classes, or records..." />
+        </div>
+        <div class="profile-actions">
+            <div class="icon-btn"><i class="fa fa-bell"></i></div>
+            <div class="icon-btn question-btn"><i class="fa fa-question"></i></div>
+            <div class="profile-info">
+                <div class="profile-text">
+                    <strong>Dr. Julian Vance</strong>
+                    <span>Administrator</span>
+                </div>
+                <img src="https://i.pravatar.cc/40?img=16" alt="Profile" />
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Daily Insight</h1>
+            <p class="page-subtitle"><em>Monday, October 23rd, 2023 &mdash; Reporting cycle active.</em></p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-outline-custom">Export PDF</button>
+            <button class="btn btn-primary-custom">Generate Report</button>
         </div>
     </div>
 
     <!-- STATS -->
-    <div class="row g-4 mt-2">
-        <div class="col-md-3">
-            <div class="stat-card active">
-                <p>Present | Today</p>
-                <h3>145</h3>
-                <small>12% increase</small>
+    <div class="row g-4 mt-1">
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">TODAY'S PRESENCE | OVERALL</span>
+                    <i class="fa fa-user-check badge-icon-large pe-2"></i>
+                </div>
+                <div class="stat-value-row">
+                    <h2 class="stat-value text-success-custom">1,248</h2>
+                    <span class="trend-badge badge-up"><i class="fa fa-arrow-trend-up"></i> +12.4%</span>
+                </div>
+                <div class="progress-wrap">
+                    <div class="progress-bar-custom" style="width: 94.2%"></div>
+                </div>
+                <small class="stat-footer">94.2% of total capacity reached</small>
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="stat-card">
-                <p>Absent | Today</p>
-                <h3>145</h3>
-                <small>12% increase</small>
+                <div class="stat-header">
+                    <span class="stat-title">LATE ARRIVALS | WATCHLIST</span>
+                </div>
+                <div class="stat-value-row">
+                    <h2 class="stat-value text-warning-custom">42</h2>
+                    <span class="trend-badge badge-down"><i class="fa fa-arrow-trend-down"></i> -4%</span>
+                </div>
+                <div class="mini-bar-chart">
+                    <div class="bar" style="height: 10px;"></div>
+                    <div class="bar" style="height: 20px;"></div>
+                    <div class="bar" style="height: 15px;"></div>
+                    <div class="bar" style="height: 35px; background: #c6854b;"></div>
+                    <div class="bar" style="height: 25px;"></div>
+                    <div class="bar" style="height: 18px;"></div>
+                    <div class="bar" style="height: 28px;"></div>
+                </div>
+                <small class="stat-footer text-muted">Spike detected in morning session</small>
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="stat-card">
-                <p>Attendance | Month</p>
-                <h3>145</h3>
-                <small>12% increase</small>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="stat-card">
-                <p>Report | Month</p>
-                <h3>145</h3>
-                <small>12% increase</small>
+                <div class="stat-header">
+                    <span class="stat-title">PENDING APPROVALS | LEAVE</span>
+                </div>
+                <div class="stat-value-row pb-1 border-bottom-light">
+                    <h2 class="stat-value text-primary-custom mb-2">18</h2>
+                </div>
+                <div class="leave-rows mt-3">
+                    <div class="leave-row">
+                        <span>Medical Leave</span>
+                        <span class="leave-badge primary-bg">12</span>
+                    </div>
+                    <div class="leave-row">
+                        <span>Personal</span>
+                        <span class="leave-badge dark-bg">8</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- CHARTS -->
-    <div class="row mt-4 g-4">
+    <div class="row mt-4 g-4 align-items-stretch">
 
         <!-- LINE CHART -->
         <div class="col-md-8">
-            <div class="chart-card">
-                <h6>Reports | Today</h6>
-                <canvas id="lineChart"></canvas>
+            <div class="chart-card d-flex flex-column h-100">
+                <div class="chart-header">
+                    <div>
+                        <h4>Weekly Attendance Flow</h4>
+                        <p class="text-muted small">Comparison of presence and absence rates over 7 days</p>
+                    </div>
+                    <div class="chart-legend">
+                        <span class="legend-item"><span class="dot present"></span> PRESENT</span>
+                        <span class="legend-item"><span class="dot absent"></span> ABSENT</span>
+                    </div>
+                </div>
+                <div class="chart-container flex-grow-1" style="min-height: 220px; position: relative;">
+                    <canvas id="lineChart"></canvas>
+                </div>
             </div>
         </div>
 
-        <!-- RADAR -->
+        <!-- DOUGHNUT CHART -->
         <div class="col-md-4">
-            <div class="chart-card">
-                <h6>Attendance Report</h6>
-                <canvas id="radarChart"></canvas>
+            <div class="chart-card h-100">
+                <div class="chart-header mb-0">
+                    <div>
+                        <h4>Status Overview</h4>
+                        <p class="text-muted small">Cumulative session data</p>
+                    </div>
+                </div>
+                <div class="doughnut-container position-relative mt-2" style="height: 180px;">
+                    <canvas id="doughnutChart"></canvas>
+                    <div class="center-text">
+                        <h3 class="fw-bold mb-0">92%</h3>
+                        <small>AVG SCORE</small>
+                    </div>
+                </div>
+                <div class="doughnut-legend mt-4">
+                    <div class="legend-row">
+                        <span><span class="dot present"></span> Present</span>
+                        <strong>1,248</strong>
+                    </div>
+                    <div class="legend-row">
+                        <span><span class="dot permission"></span> Permission</span>
+                        <strong>54</strong>
+                    </div>
+                    <div class="legend-row">
+                        <span><span class="dot late"></span> Late</span>
+                        <strong>42</strong>
+                    </div>
+                    <div class="legend-row">
+                        <span><span class="dot absent"></span> Absent</span>
+                        <strong>28</strong>
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
 
+    <!-- BOTTOM ROW: Performance & Records -->
+    <div class="row mt-4 g-4">
+        <!-- Performance by Class -->
+        <div class="col-12">
+            <div class="chart-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="mb-1">Performance by Class</h4>
+                        <p class="text-muted small mb-0">Analysis of attendance across academic departments</p>
+                    </div>
+                    <div class="filter-badge">
+                        FILTERS: ALL GRADES &bull; LAST 30 DAYS
+                    </div>
+                </div>
+                
+                <div class="performance-bars">
+                    <div class="subject-col" *ngFor="let s of subjects">
+                        <div class="bar-track">
+                            <div class="bar-fill" [style.height.%]="s.value" [style.background]="s.bg"></div>
+                        </div>
+                        <span class="subject-name">{{s.name}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Records -->
+        <div class="col-12">
+            <div class="chart-card p-0 overflow-hidden">
+                <div class="p-4 border-bottom-light">
+                    <h4 class="mb-0">Recent Records</h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0 record-table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>STUDENT</th>
+                                <th>ID</th>
+                                <th>CLASS</th>
+                                <th>STATUS</th>
+                                <th>CHECK-IN</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="student-cell">
+                                        <img src="https://i.pravatar.cc/32?img=68" alt="Elias">
+                                        <strong>Elias Thorn</strong>
+                                    </div>
+                                </td>
+                                <td class="text-muted fst-italic">#ST-9402</td>
+                                <td>CS-402 (Networking)</td>
+                                <td><span class="status-badge status-present">PRESENT</span></td>
+                                <td>08:45 AM</td>
+                                <td><i class="fa fa-ellipsis-v action-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="student-cell">
+                                        <img src="https://i.pravatar.cc/32?img=47" alt="Maya">
+                                        <strong>Maya Lin</strong>
+                                    </div>
+                                </td>
+                                <td class="text-muted fst-italic">#ST-8812</td>
+                                <td>MA-101 (Calculus)</td>
+                                <td><span class="status-badge status-late">LATE</span></td>
+                                <td>09:15 AM</td>
+                                <td><i class="fa fa-ellipsis-v action-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="student-cell">
+                                        <img src="https://i.pravatar.cc/32?img=12" alt="Oliver">
+                                        <strong>Oliver Grant</strong>
+                                    </div>
+                                </td>
+                                <td class="text-muted fst-italic">#ST-7734</td>
+                                <td>PH-302 (Quantum)</td>
+                                <td><span class="status-badge status-present">PRESENT</span></td>
+                                <td>08:52 AM</td>
+                                <td><i class="fa fa-ellipsis-v action-icon"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    // Line Chart
-    new Chart(document.getElementById('lineChart'), {
-        type: 'line',
-        data: {
-            labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00'],
-            datasets: [
-                { label: 'Present', data: [30, 40, 25, 50, 42, 80, 55], borderWidth: 2 },
-                { label: 'Absent', data: [15, 12, 30, 20, 10, 25, 12], borderWidth: 2 },
-                { label: 'Late', data: [10, 30, 45, 32, 35, 50, 40], borderWidth: 2 }
-            ]
-        }
-    });
-
-    // Radar Chart
-    new Chart(document.getElementById('radarChart'), {
-        type: 'radar',
-        data: {
-            labels: ['Sales', 'Marketing', 'Dev', 'Support', 'Tech'],
-            datasets: [
-                { label: 'Allocated', data: [65, 59, 90, 81, 56] },
-                { label: 'Actual', data: [28, 48, 40, 19, 96] }
-            ]
-        }
-    });
-</script>

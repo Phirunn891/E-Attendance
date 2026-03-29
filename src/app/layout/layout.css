@@ -43,6 +43,12 @@ body {
   margin-right: 10px;
 }
 
+.menu li a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
 .menu li.active,
 .menu li:hover {
   background: #198754;

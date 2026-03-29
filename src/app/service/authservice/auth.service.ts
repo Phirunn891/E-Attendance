@@ -1,20 +1,26 @@
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, timeout, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../env/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth';
+  private apiUrl =   `${environment.apiUrl}/auth`;
   private http = inject(HttpClient);
   private router = inject(Router);
   private platformId = inject(PLATFORM_ID);
 
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
+      timeout(10000), // Max 10 seconds for login
+      catchError(err => {
+        console.error('Login request failed or timed out:', err);
+        return throwError(() => err);
+      }),
       tap((response: any) => {
         if (response.token && isPlatformBrowser(this.platformId)) {
           localStorage.setItem('token', response.token);
